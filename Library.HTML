@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            background: #2c3e50;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            text-align: center;
+        }
+        nav a:hover {
+            background: #1abc9c;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background: #34495e;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        input[type="text"], input[type="number"], input[type="email"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #1abc9c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #16a085;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Library Management System</h1>
+    </header>
+    <nav>
+        <a href="#manage-books">Book Management</a>
+        <a href="#manage-users">User Management</a>
+        <a href="#borrow-return">Borrow/Return</a>
+        <a href="#reports">Reports</a>
+    </nav>
+    <main>
+        <!-- Book Management Section -->
+        <section id="manage-books">
+            <h2>Book Management</h2>
+            <form>
+                <label for="book-title">Book Title:</label>
+                <input type="text" id="book-title" name="book-title" placeholder="Enter book title">
+                <label for="book-author">Author:</label>
+                <input type="text" id="book-author" name="book-author" placeholder="Enter author name">
+                <label for="book-year">Year:</label>
+                <input type="number" id="book-year" name="book-year" placeholder="Enter year of publication">
+                <button type="submit">Add Book</button>
+            </form>
+        </section>
+
+        <!-- User Management Section -->
+        <section id="manage-users">
+            <h2>User Management</h2>
+            <form>
+                <label for="user-name">Name:</label>
+                <input type="text" id="user-name" name="user-name" placeholder="Enter user name">
+                <label for="user-email">Email:</label>
+                <input type="email" id="user-email" name="user-email" placeholder="Enter user email">
+                <button type="submit">Add User</button>
+            </form>
+        </section>
+
+        <!-- Borrow/Return Section -->
+        <section id="borrow-return">
+            <h2>Borrow/Return Books</h2>
+            <form>
+                <label for="borrow-user-id">User ID:</label>
+                <input type="number" id="borrow-user-id" name="borrow-user-id" placeholder="Enter user ID">
+                <label for="borrow-book-id">Book ID:</label>
+                <input type="number" id="borrow-book-id" name="borrow-book-id" placeholder="Enter book ID">
+                <button type="submit">Borrow Book</button>
+            </form>
+            <form>
+                <label for="return-transaction-id">Transaction ID:</label>
+                <input type="number" id="return-transaction-id" name="return-transaction-id" placeholder="Enter transaction ID">
+                <button type="submit">Return Book</button>
+            </form>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports">
+            <h2>Reports</h2>
+            <form>
+                <label for="search-keyword">Search Books:</label>
+                <input type="text" id="search-keyword" name="search-keyword" placeholder="Enter keyword">
+                <button type="submit">Search</button>
+            </form>
+            <form>
+                <button type="button">View Transaction History</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>Library Management System &copy; 2024</p>
+    </footer>
+</body>
+</html>
