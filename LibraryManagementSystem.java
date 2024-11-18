@@ -1,139 +1,122 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
 
 public class LibraryManagementSystem {
 
+    // Database connection details
+    static final String DB_URL = "jdbc:mysql://localhost:3306/LibraryDB";
+    static final String DB_USER = "root";
+    static final String DB_PASS = "password";
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Library library = new Library();
+        new LibraryManagementSystem();
+    }
 
-        // Adding some sample books
-        library.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald"));
-        library.addBook(new Book("1984", "George Orwell"));
-        library.addBook(new Book("To Kill a Mockingbird", "Harper Lee"));
+    public LibraryManagementSystem() {
+        // Initialize main frame
+        JFrame frame = new JFrame("Library Management System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 600);
 
-        // Adding a sample member
-        library.addMember(new Member("Alice"));
+        // Main panel with options
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 2, 10, 10));
 
-        while (true) {
-            System.out.println("\nLibrary Management System");
-            System.out.println("1. List Books");
-            System.out.println("2. Borrow Book");
-            System.out.println("3. Return Book");
-            System.out.println("4. Exit");
-            System.out.print("Choose an option: ");
+        JButton bookButton = new JButton("Manage Books");
+        JButton userButton = new JButton("Manage Users");
+        JButton borrowReturnButton = new JButton("Borrow/Return Book");
+        JButton fineButton = new JButton("Calculate Fines");
+        JButton searchButton = new JButton("Search and Filter");
+        JButton statsButton = new JButton("View Reports and Statistics");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+        panel.add(bookButton);
+        panel.add(userButton);
+        panel.add(borrowReturnButton);
+        panel.add(fineButton);
+        panel.add(searchButton);
+        panel.add(statsButton);
 
-            switch (choice) {
-                case 1:
-                    library.listBooks();
-                    break;
-                case 2:
-                    System.out.print("Enter book title to borrow: ");
-                    String borrowTitle = scanner.nextLine();
-                    library.borrowBook(borrowTitle, new Member("Alice")); // Assuming a single member for simplicity
-                    break;
-                case 3:
-                    System.out.print("Enter book title to return: ");
-                    String returnTitle = scanner.nextLine();
-                    library.returnBook(returnTitle, new Member("Alice")); // Assuming a single member for simplicity
-                    break;
-                case 4:
-                    System.out.println("Exiting...");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid option. Please try again.");
+        frame.add(panel);
+
+        // Add listeners for each button
+        bookButton.addActionListener(e -> manageBooks());
+        userButton.addActionListener(e -> manageUsers());
+        borrowReturnButton.addActionListener(e -> borrowReturnBook());
+        fineButton.addActionListener(e -> calculateFines());
+        searchButton.addActionListener(e -> searchFilterBooks());
+        statsButton.addActionListener(e -> viewReports());
+
+        frame.setVisible(true);
+    }
+
+    private void manageBooks() {
+        // Frame for managing books
+        JFrame bookFrame = new JFrame("Manage Books");
+        bookFrame.setSize(400, 300);
+
+        JLabel titleLabel = new JLabel("Title:");
+        JTextField titleField = new JTextField(20);
+
+        JLabel authorLabel = new JLabel("Author:");
+        JTextField authorField = new JTextField(20);
+
+        JLabel genreLabel = new JLabel("Genre:");
+        JTextField genreField = new JTextField(20);
+
+        JButton addButton = new JButton("Add Book");
+
+        JPanel panel = new JPanel();
+        panel.add(titleLabel);
+        panel.add(titleField);
+        panel.add(authorLabel);
+        panel.add(authorField);
+        panel.add(genreLabel);
+        panel.add(genreField);
+        panel.add(addButton);
+
+        addButton.addActionListener(e -> {
+            String title = titleField.getText();
+            String author = authorField.getText();
+            String genre = genreField.getText();
+
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+                 PreparedStatement stmt = conn.prepareStatement(
+                         "INSERT INTO Books (Title, Author, Genre) VALUES (?, ?, ?)")) {
+
+                stmt.setString(1, title);
+                stmt.setString(2, author);
+                stmt.setString(3, genre);
+                stmt.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Book Added Successfully!");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             }
-        }
-    }
-}
+        });
 
-class Book {
-    private String title;
-    private String author;
-    private boolean isAvailable;
-
-    public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
-        this.isAvailable = true;
+        bookFrame.add(panel);
+        bookFrame.setVisible(true);
     }
 
-    public String getTitle() {
-        return title;
+    private void manageUsers() {
+        // Similar implementation to manageBooks for managing users
     }
 
-    public String getAuthor() {
-        return author;
+    private void borrowReturnBook() {
+        // Implementation for borrowing and returning books
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    private void calculateFines() {
+        // Implementation for calculating fines
     }
 
-    public void setAvailable(boolean available) {
-        this.isAvailable = available;
-    }
-}
-
-class Member {
-    private String name;
-
-    public Member(String name) {
-        this.name = name;
+    private void searchFilterBooks() {
+        // Implementation for search and filter functionality
     }
 
-    public String getName() {
-        return name;
-    }
-}
-
-class Library {
-    private ArrayList<Book> books;
-    private ArrayList<Member> members;
-
-    public Library() {
-        books = new ArrayList<>();
-        members = new ArrayList<>();
-    }
-
-    public void addBook(Book book) {
-        books.add(book);
-    }
-
-    public void addMember(Member member) {
-        members.add(member);
-    }
-
-    public void borrowBook(String title, Member member) {
-        for (Book book : books) {
-            if (book.getTitle().equalsIgnoreCase(title) && book.isAvailable()) {
-                book.setAvailable(false);
-                System.out.println(member.getName() + " borrowed " + title);
-                return;
-            }
-        }
-        System.out.println("Book not available or does not exist.");
-    }
-
-    public void returnBook(String title, Member member) {
-        for (Book book : books) {
-            if (book.getTitle().equalsIgnoreCase(title) && !book.isAvailable()) {
-                book.setAvailable(true);
-                System.out.println(member.getName() + " returned " + title);
-                return;
-            }
-        }
-        System.out.println("This book wasn't borrowed or does not exist.");
-    }
-
-    public void listBooks() {
-        System.out.println("Books in the library:");
-        for (Book book : books) {
-            System.out.println(book.getTitle() + " by " + book.getAuthor() + (book.isAvailable() ? " (Available)" : " (Not Available)"));
-        }
+    private void viewReports() {
+        // Implementation for reports and statistics
     }
 }
