@@ -1,0 +1,23 @@
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required>
+<span id="emailError"></span>
+
+<script>
+// ...
+email.addEventListener("input", () => {
+  if (email.value === "") {
+    emailError.textContent = "Email is required.";
+  } else if (!isValidEmail(email.value)) {
+    emailError.textContent = "Invalid email format.";
+  } else {
+    emailError.textContent = "";
+  }
+});
+
+// Function to validate email format
+function isValidEmail(email) {
+  // Regular expression for email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+</script>

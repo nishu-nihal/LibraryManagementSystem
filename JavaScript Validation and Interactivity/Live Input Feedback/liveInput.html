@@ -1,0 +1,17 @@
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" required>
+<span id="passwordStrength"></span>
+
+<script>
+// ...
+password.addEventListener("input", () => {
+  const strength = checkPasswordStrength(password.value);
+  passwordStrength.textContent = strength;
+});
+
+function checkPasswordStrength(password) {
+  // Implement password strength logic (e.g., length, uppercase, lowercase, numbers, special characters)
+  // ...
+  return "Weak"; // Replace with actual strength assessment
+}
+</script>
