@@ -1,0 +1,45 @@
+// BookManagement.java
+import java.sql.*;
+import javax.swing.*;
+
+public class BookManagement {
+    private Connection connection;
+
+    public BookManagement(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void addBook(String title, String author, String category) {
+        try {
+            String query = "INSERT INTO books (title, author, category) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, title);
+            pstmt.setString(2, author);
+            pstmt.setString(3, category);
+            pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Book added successfully!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error adding book: " + e.getMessage());
+        }
+    }
+
+    public void viewBooks() {
+        try {
+            String query = "SELECT * FROM books";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            StringBuilder sb = new StringBuilder("Books in the library:\n");
+            while (rs.next()) {
+                sb.append("ID: ").append(rs.getInt("book_id"))
+                  .append(", Title: ").append(rs.getString("title"))
+                  .append(", Author: ").append(rs.getString("author"))
+                  .append(", Category: ").append(rs.getString("category"))
+                  .append(", Available: ").append(rs.getBoolean("available"))
+                  .append("\n");
+            }
+            JOptionPane.showMessageDialog(null, sb.toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error fetching books: " + e.getMessage());
+        }
+    }
+}
