@@ -1,0 +1,42 @@
+// ThemeManager.java
+import javax.swing.*;
+import java.awt.*;
+
+public class ThemeManager {
+    private static boolean isDarkMode = false; // Default to light mode
+
+    public static void applyTheme(JFrame frame) {
+        SwingUtilities.invokeLater(() -> {
+            if (isDarkMode) {
+                frame.getContentPane().setBackground(Color.DARK_GRAY);
+                updateComponentColors(frame.getContentPane(), Color.WHITE, Color.DARK_GRAY);
+            } else {
+                frame.getContentPane().setBackground(Color.LIGHT_GRAY);
+                updateComponentColors(frame.getContentPane(), Color.BLACK, Color.LIGHT_GRAY);
+            }
+        });
+    }
+
+    private static void updateComponentColors(Container container, Color foreground, Color background) {
+        for (Component component : container.getComponents()) {
+            if (component instanceof JPanel) {
+                component.setBackground(background);
+                updateComponentColors((Container) component, foreground, background);
+            } else {
+                component.setForeground(foreground);
+                if (component instanceof JButton || component instanceof JTextField || component instanceof JLabel) {
+                    component.setBackground(background);
+                }
+            }
+        }
+    }
+
+    public static void toggleTheme(JFrame frame) {
+        isDarkMode = !isDarkMode;
+        applyTheme(frame);
+    }
+
+    public static boolean isDarkMode() {
+        return isDarkMode;
+    }
+}
