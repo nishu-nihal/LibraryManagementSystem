@@ -1,0 +1,19 @@
+// ValidationUtils.java
+public class ValidationUtils {
+    public static boolean validateNonEmpty(String input, String fieldName) {
+        if (input == null || input.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, fieldName + " cannot be empty!");
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean validateEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        if (!email.matches(emailRegex)) {
+            JOptionPane.showMessageDialog(null, "Invalid email format!");
+            return false;
+        }
+        return true;
+    }
+}
