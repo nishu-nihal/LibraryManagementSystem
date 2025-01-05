@@ -1,0 +1,20 @@
+// Updated method in BookManagement.java
+public void addBook(String title, String author, String category) {
+    if (!ValidationUtils.validateNonEmpty(title, "Title") ||
+        !ValidationUtils.validateNonEmpty(author, "Author") ||
+        !ValidationUtils.validateNonEmpty(category, "Category")) {
+        return;
+    }
+
+    try {
+        String query = "INSERT INTO books (title, author, category) VALUES (?, ?, ?)";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, title);
+        pstmt.setString(2, author);
+        pstmt.setString(3, category);
+        pstmt.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Book added successfully!");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error adding book: " + e.getMessage());
+    }
+}
