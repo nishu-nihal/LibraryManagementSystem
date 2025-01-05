@@ -1,0 +1,35 @@
+// MainApp.java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class MainApp {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Library Management System");
+        frame.setSize(600, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create GUI Components
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JButton toggleThemeButton = new JButton("Toggle Dark Mode");
+        JButton manageBooksButton = new JButton("Manage Books");
+        JButton viewUsersButton = new JButton("View Users");
+
+        // Add action listener for Dark Mode toggle
+        toggleThemeButton.addActionListener(e -> ThemeManager.toggleTheme(frame));
+
+        // Add components to the panel
+        panel.add(toggleThemeButton);
+        panel.add(manageBooksButton);
+        panel.add(viewUsersButton);
+
+        frame.add(panel);
+
+        // Apply initial theme
+        ThemeManager.applyTheme(frame);
+
+        frame.setVisible(true);
+    }
+}
