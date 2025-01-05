@@ -1,0 +1,36 @@
+// Example of Swing Event Handling in Book Management GUI
+import javax.swing.*;
+import java.awt.event.*;
+
+public class BookManagementUI {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Library Management System");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JButton addBookButton = new JButton("Add Book");
+        JButton viewBooksButton = new JButton("View Books");
+
+        addBookButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String title = JOptionPane.showInputDialog("Enter book title:");
+                String author = JOptionPane.showInputDialog("Enter book author:");
+                String category = JOptionPane.showInputDialog("Enter book category:");
+                // Call addBook method (assuming connection is passed)
+            }
+        });
+
+        viewBooksButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Call viewBooks method
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(addBookButton);
+        panel.add(viewBooksButton);
+
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+}
