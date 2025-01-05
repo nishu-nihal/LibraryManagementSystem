@@ -1,0 +1,14 @@
+LibraryManagementSystem/
+│
+├── src/
+│   ├── BookManagement.java
+│   ├── MainApp.java
+│   ├── DatabaseConnection.java
+│   ├── UserManagement.java
+│   └── FineCalculation.java
+│
+├── resources/
+│   └── database.sql
+│
+├── README.md
+└── .gitignore
