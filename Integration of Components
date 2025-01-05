@@ -1,0 +1,39 @@
+// MainApp.java
+import javax.swing.*;
+
+public class MainApp {
+    public static void main(String[] args) {
+        Connection connection = DatabaseConnection.connect();
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "Failed to connect to the database!");
+            return;
+        }
+
+        BookManagement bookManagement = new BookManagement(connection);
+
+        while (true) {
+            String[] options = {"Add Book", "View Books", "Exit"};
+            int choice = JOptionPane.showOptionDialog(
+                null,
+                "Choose an option",
+                "Library Management System",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]
+            );
+
+            if (choice == 0) {
+                String title = JOptionPane.showInputDialog("Enter book title:");
+                String author = JOptionPane.showInputDialog("Enter book author:");
+                String category = JOptionPane.showInputDialog("Enter book category:");
+                bookManagement.addBook(title, author, category);
+            } else if (choice == 1) {
+                bookManagement.viewBooks();
+            } else {
+                break;
+            }
+        }
+    }
+}
