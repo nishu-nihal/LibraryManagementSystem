@@ -1,0 +1,29 @@
+# Library Management System
+
+## Objective
+A simple yet efficient library management system with user-friendly features to manage books, users, transactions, and fines.
+
+## Features
+- **User-Friendly Interface**: Easy-to-use Swing GUI.
+- **Book Management**: Add, view, search, and filter books.
+- **User Management**: Manage user records with validation.
+- **Borrow and Return Books**: Record transactions with fine calculation.
+- **Real-Time Search**: Search for books dynamically.
+- **Dark Mode Toggle**: UI toggle for light/dark themes.
+- **Reporting and Statistics**: Generate summaries for library usage.
+
+## Data Validation
+- Ensures non-empty input fields.
+- Validates email formats using regex.
+
+## Code Quality
+- Modularized code with reusable components.
+- Constants for error messages and queries.
+
+## Setup Instructions
+1. Install MySQL and create the database using `resources/database.sql`.
+2. Configure database credentials in `DatabaseConnection.java`.
+3. Compile and run the project:
+   ```bash
+   javac -d bin src/*.java
+   java -cp bin MainApp
